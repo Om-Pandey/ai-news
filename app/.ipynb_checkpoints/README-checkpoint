@@ -1,0 +1,8 @@
+# Initialize the database
+export FLASK_APP=app/main.py
+flask init-db
+
+# run the flask app
+export FLASK_ENV=development
+export FLASK_APP=app/main.py                        
+flask run

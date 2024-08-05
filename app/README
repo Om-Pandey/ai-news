@@ -1,0 +1,10 @@
+# Initialize the database
+export FLASK_APP=app/main.py
+flask init-db
+
+# run the flask app
+export FLASK_ENV=development
+export FLASK_APP=app/main.py                        
+flask run
+
+# You don't have to initialize the databse everytime when data updated. But you will need to re-run the app evrytime when data updated since this app has not achieve automatically updated.

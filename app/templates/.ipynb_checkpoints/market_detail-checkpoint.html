@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Sentiment Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{{ url_for('static', filename='pattern.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #0F5447;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #CDEAE6;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .content {
+            text-align: left;
+        }
+        .content h2 {
+            color: #2C6E49;
+            margin-bottom: 20px;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2C6E49;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .daily-scores {
+            margin-top: 20px;
+        }
+        .daily-scores h3 {
+            color: #2C6E49;
+            margin-bottom: 10px;
+        }
+        .daily-scores ul {
+            list-style: none;
+            padding: 0;
+        }
+        .daily-scores ul li {
+            margin-bottom: 5px;
+            padding: 10px;
+            background-color: #F3F3F3;
+            border-radius: 5px;
+        }
+        .daily-scores ul li.hidden {
+            display: none;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 20px;
+        }
+        .toggle-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #2C6E49;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .toggle-btn:hover {
+            background-color: #1F4D36;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>Market Sentiment Detail</h1>
+    </div>
+    <div class="container">
+        <div class="content">
+            <h2>{{ item.topic }}</h2>
+            <p><strong>History Sentiment Score:</strong> {{ item.history_score }}</p>
+            <div class="daily-scores">
+                <h3>Daily Sentiment Scores</h3>
+                <ul id="dailyScoresList">
+                    {% set daily_scores = item.daily_scores.items() %}
+                    {% for date, score in daily_scores|reverse %}
+                    <li class="{% if loop.index > 3 %}hidden{% endif %}">{{ date }}: {{ score }}</li>
+                    {% endfor %}
+                </ul>
+                <button class="toggle-btn" id="toggleBtn" onclick="toggleScores()">More</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="sentimentChart"></canvas>
+            </div>
+            <a href="{{ url_for('index') }}" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+    <script>
+        function toggleScores() {
+            var items = document.querySelectorAll('.daily-scores ul li');
+            var button = document.getElementById('toggleBtn');
+            if (button.innerText === "More") {
+                items.forEach(function(item) {
+                    item.classList.remove('hidden');
+                });
+                button.innerText = "Less";
+            } else {
+                items.forEach(function(item, index) {
+                    if (index >= 3) {
+                        item.classList.add('hidden');
+                    }
+                });
+                button.innerText = "More";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('sentimentChart').getContext('2d');
+            var labels = {{ item.daily_scores.keys()|list|tojson }};
+            var data = {{ item.daily_scores.values()|list|tojson }};
+            var historyScore = {{ item.history_score }};
+
+            var sentimentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Daily Sentiment Score',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1,
+                        fill: true,
+                        pointRadius: 5,
+                        pointHoverRadius: 8
+                    }, {
+                        label: 'History Sentiment Score',
+                        data: new Array(labels.length).fill(historyScore),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 1,
+                        borderDash: [10, 5],
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'category',
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Sentiment Score'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

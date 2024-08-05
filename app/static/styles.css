@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #0F5447;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.header {
+    background-color: #FBF9F4; 
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2em;
+    color:#0F5447;
+}
+
+.header img {
+    position: absolute;
+    top: 50%;
+    right: 0px; /* Adjust the position of the image */
+    transform: translateY(-50%);
+    height: 77px; /* Adjust the size of the image */
+    width: auto;
+}
+
+/* .container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #FBF9F4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+} */
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #0F5447; /* Dark green */
+    text-align: center;
+}
+
+.news-summary, .market-sentiment, .hot-topics {
+    display: flex;
+    /* flex-direction: column;
+    align-items: center; */
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 40px;
+    justify-content: center;
+}
+
+.news-item {
+    background-color: #B8E0D5; /* Blue green */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 40px);
+}
+
+.sentiment-item {
+    background-color: #F6EAD9; /* Light orange */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 40px);
+}
+
+.hot-topic-item {
+    background-color: #0F5447;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 40px);
+}
+
+.news-item h3 {
+    font-size: 1.2em;
+    margin-top: 0;
+    color: #0F5447; /* Dark green */
+}
+
+.hot-topic-item h3 {
+    font-size: 1.2em;
+    margin-top: 0;
+    color: #B8E0D5; 
+}
+
+.news-item p, .sentiment-item p{
+    margin: 5px 0;
+    color: #0F5447; /* Dark green */
+}
+
+.hot-topic-item p {
+    margin: 5px 0;
+    color: #F7C544;
+}
+
+.sentiment-item p strong {
+    color: #0F5447; /* Dark green */
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insight News</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{{ url_for('static', filename='pattern.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #0F5447;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #CDEAE6;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: relative;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background-color: #CDEAE6;
+            z-index: -1;
+        }
+        .header img {
+            display: block;
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .section h2 {
+            background-color: #2C6E49;
+            color: white;
+            padding: 10px;
+            margin: 0 auto 20px;
+            display: inline-block;
+        }
+        .items {
+            display: grid;
+            gap: 20px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .news-summary .items {
+            grid-template-columns: 1fr;
+        }
+        .market-sentiment .items {
+            grid-template-columns: 1fr;
+        }
+        .hot-topics .items {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .item {
+            background-color: #F3F3F3;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .news-summary .item {
+            background-color: #F5E8C8;
+        }
+        .market-sentiment .item {
+            background-color: #CDEAE6;
+        }
+        .hot-topic-item {
+            background-color: #0F5447;
+            color: white;
+        }
+        .hot-topic-item h3 {
+            margin: 0 0 10px 0;
+        }
+        .article-score {
+            color: #F7C544; /* Set score color to orange */
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .learn-more-btn {
+            background-color: #2C6E49;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI Insight News</h1>
+        <img src="{{ url_for('static', filename='small_image.png') }}" alt="Small Image">
+    </div>
+    <div class="container">
+        <div class="section news-summary">
+            <h2>News Summary</h2>
+            <div class="items">
+                {% for news in news_summary %}
+                <div class="item">
+                    <h3><a href="{{ news.url }}" target="_blank">{{ news.headline }}</a></h3>
+                    <p>{{ news.summary }}</p>
+                    <p>Sentiment Score: {{ news.score }}</p>
+                    <p>Category: {{ news.category }}</p>
+                    <div class="meta-info">
+                        <p>Published: {{ news.published }}</p>
+                        <p>News source: {{ news.source }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('more_news') }}" class="learn-more-btn">Learn More</a>
+        </div>
+        <div class="section market-sentiment">
+            <h2>Market Sentiment Tendency</h2>
+            <div class="items">
+                {% for item in market_sentiment %}
+                <div class="item">
+                    <p><strong><a href="{{ url_for('market_detail', item_id=item.id) }}">{{ item.topic }}</a></strong></p>
+                    <p>History Sentiment Score: {{ item.score }}</p>
+                    <p>Latest Score ({{ item.latest_date }}): {{ item.latest_score }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section hot-topics">
+            <h2>Hot Topics</h2>
+            <div class="items">
+                {% for topic in hot_topics %}
+                <div class="item hot-topic-item">
+                    <h3>{{ topic.category }}</h3>
+                    <p><strong>Latest Score:</strong> {{ topic.latest_score }}</p>
+                    <ul>
+                        {% for article in topic.articles %}
+                        <li>
+                            <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+                            (Score: <span class="article-score">{{ article.score }}</span>)
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

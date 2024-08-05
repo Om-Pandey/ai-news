@@ -1,0 +1,51 @@
+{
+    "Strategic Innovations, Evolving Technologies, and Competition": {
+        "daily_average_scores": {
+            "2024-06-30": 0.1725,
+            "2024-07-01": 0.0302,
+            "2024-07-02": -0.0342
+        },
+        "history_average_score": 0.0562
+    },
+    "Regulatory Changes and Continued Regulatory Scrutiny": {
+        "daily_average_scores": {
+            "2024-06-30": 0.1635,
+            "2024-07-01": -0.1303,
+            "2024-07-02": -0.1257
+        },
+        "history_average_score": -0.0308
+    },
+    "Resiliency and Cybersecurity": {
+        "daily_average_scores": {
+            "2024-06-30": 0.1635,
+            "2024-07-01": -0.0672,
+            "2024-07-02": -0.2692
+        },
+        "history_average_score": -0.0576
+    },
+    "Geopolitical and Macroeconomic Uncertainty": {
+        "daily_average_scores": {
+            "2024-06-30": 0.1409,
+            "2024-07-01": -0.1718,
+            "2024-07-02": -0.1637,
+            "2024-07-03": 0.3
+        },
+        "history_average_score": 0.0263
+    },
+    "Human Capital": {
+        "daily_average_scores": {
+            "2024-06-30": 0.2178,
+            "2024-07-01": -0.1278,
+            "2024-07-02": -0.1351
+        },
+        "history_average_score": -0.015
+    },
+    "Interconnectedness Risk and Externalization of Services and Support": {
+        "daily_average_scores": {
+            "2024-06-30": 0.2178,
+            "2024-07-01": -0.0938,
+            "2024-07-02": -0.26
+        },
+        "history_average_score": -0.0453
+    }
+}
